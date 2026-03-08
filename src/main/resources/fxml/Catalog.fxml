@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.leocodes.relikd.controller.CatalogController" styleClass="root">
+
+    <top>
+        <HBox styleClass="nav-bar">
+            <Label text="Relikd" styleClass="title-label"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="welcomeLabel" styleClass="subtitle-label"/>
+            <Button fx:id="cartButton" onAction="#onCartClicked" styleClass="btn-nav-icon"/>
+            <Button fx:id="ordersButton" onAction="#onOrdersClicked" styleClass="btn-nav-icon"/>
+            <Button fx:id="adminButton" onAction="#onAdminClicked" styleClass="btn-nav-icon" visible="false" managed="false"/>
+            <Button fx:id="profileButton" onAction="#onProfileClicked" styleClass="btn-nav-icon"/>
+            <Button fx:id="themeToggleButton" onAction="#onThemeToggle" styleClass="btn-theme-toggle"/>
+            <Button fx:id="settingsButton" onAction="#onSettingsClicked" styleClass="btn-nav-icon"/>
+        </HBox>
+    </top>
+
+    <left>
+        <ScrollPane fitToWidth="true" styleClass="scroll-pane" prefWidth="230">
+            <VBox styleClass="sidebar">
+                <Label text="Filters" styleClass="section-heading"/>
+
+                <VBox spacing="4">
+                    <Label text="SEARCH" styleClass="field-label"/>
+                    <TextField fx:id="searchField" promptText="Model or Brand..." styleClass="text-field"/>
+                </VBox>
+
+                <VBox spacing="4">
+                    <Label text="ERA" styleClass="field-label"/>
+                    <ComboBox fx:id="eraFilter" maxWidth="Infinity" styleClass="combo-box"/>
+                </VBox>
+
+                <VBox spacing="4">
+                    <Label text="BRAND" styleClass="field-label"/>
+                    <ComboBox fx:id="brandFilter" maxWidth="Infinity" styleClass="combo-box"/>
+                </VBox>
+
+                <VBox spacing="4">
+                    <Label text="CONDITION" styleClass="field-label"/>
+                    <ComboBox fx:id="conditionFilter" maxWidth="Infinity" styleClass="combo-box"/>
+                </VBox>
+
+                <Separator/>
+
+                <VBox spacing="4">
+                    <Label text="SORT BY" styleClass="field-label"/>
+                    <ComboBox fx:id="sortFilter" maxWidth="Infinity" styleClass="combo-box"/>
+                </VBox>
+
+                <Label fx:id="resultsLabel" styleClass="results-label"/>
+
+                <Button text="Clear Filters" onAction="#onClearFilters" styleClass="btn-secondary" maxWidth="Infinity"/>
+            </VBox>
+        </ScrollPane>
+    </left>
+
+    <center>
+        <ScrollPane fx:id="mainScrollPane" fitToWidth="true" styleClass="scroll-pane">
+            <StackPane style="-fx-padding: 20;">
+                <FlowPane fx:id="computerGrid" styleClass="catalog-grid" prefWrapLength="800"/>
+                <ProgressIndicator fx:id="loadingIndicator" visible="false" styleClass="progress-indicator"/>
+            </StackPane>
+        </ScrollPane>
+    </center>
+
+</BorderPane>

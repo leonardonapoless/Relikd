@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.leocodes.relikd.controller.CartController" styleClass="root">
+
+    <top>
+        <HBox styleClass="nav-bar">
+            <Button text="← Back to Catalog" onAction="#onBack" styleClass="btn-link"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label text="Your Cart" styleClass="title-label"/>
+        </HBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="scroll-pane">
+            <VBox spacing="20" maxWidth="800" alignment="TOP_CENTER" style="-fx-padding: 20;">
+
+                <VBox fx:id="cartItemsBox" styleClass="card" style="-fx-padding: 0;"/>
+
+                <HBox alignment="CENTER_RIGHT" spacing="20" styleClass="card">
+                    <ProgressIndicator fx:id="loadingIndicator" visible="false" styleClass="progress-indicator"/>
+
+                    <VBox alignment="CENTER_RIGHT" spacing="4">
+                        <Label text="TOTAL" styleClass="field-label"/>
+                        <Label fx:id="totalLabel" styleClass="card-price" style="-fx-font-size: 28px;"/>
+                    </VBox>
+                    <Button fx:id="checkoutButton" text="Place Order" onAction="#onCheckout" styleClass="btn-primary" prefHeight="45" prefWidth="150"/>
+                </HBox>
+            </VBox>
+        </ScrollPane>
+    </center>
+
+</BorderPane>

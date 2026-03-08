@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.leocodes.relikd.controller.SettingsController" styleClass="root">
+
+    <top>
+        <HBox styleClass="nav-bar">
+            <Button text="← Back to Catalog" onAction="#onBack" styleClass="btn-link"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label text="Settings" styleClass="title-label"/>
+        </HBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="scroll-pane">
+            <VBox spacing="24" maxWidth="500" alignment="TOP_CENTER" style="-fx-padding: 30;">
+
+                <VBox spacing="14" styleClass="settings-card">
+                    <Label text="Appearance" styleClass="section-heading"/>
+
+                    <HBox spacing="14" alignment="CENTER_LEFT" styleClass="toggle-row">
+                        <Label text="Theme"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Button fx:id="themeToggleButton" onAction="#onToggleTheme" styleClass="btn-secondary"/>
+                    </HBox>
+                </VBox>
+
+                <VBox spacing="10" styleClass="settings-card">
+                    <Label text="About" styleClass="section-heading"/>
+                    <Label text="Relikd" styleClass="card-title"/>
+                    <Label text="Version 1.0" styleClass="card-year"/>
+                </VBox>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+
+</BorderPane>

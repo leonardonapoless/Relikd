@@ -1,0 +1,324 @@
+.root {
+    -fx-background-color: #141414;
+    -fx-text-fill: #e8e4df;
+}
+
+
+.title-label {
+    -fx-text-fill: #c9a96e;
+}
+
+.subtitle-label {
+    -fx-text-fill: #8a8a8a;
+}
+
+.section-heading {
+    -fx-text-fill: #d4c4a0;
+}
+
+.field-label {
+    -fx-text-fill: #8a8a8a;
+}
+
+.error-label {
+    -fx-text-fill: #e06060;
+}
+
+.empty-state-label {
+    -fx-text-fill: #555555;
+}
+
+.card-year {
+    -fx-text-fill: #777777;
+}
+
+.card-price {
+    -fx-text-fill: #5cb85c;
+}
+
+.card-title {
+    -fx-text-fill: #e8e4df;
+}
+
+
+.nav-bar {
+    -fx-background-color: #1e1e1e;
+    -fx-border-color: #333333;
+    -fx-border-width: 0 0 1 0;
+}
+
+.nav-bar .title-label {
+    -fx-text-fill: #c9a96e;
+}
+
+.nav-bar .label {
+    -fx-text-fill: #8a8a8a;
+}
+
+.nav-icon {
+    -fx-icon-color: #c9a96e;
+    -fx-fill: #c9a96e;
+}
+
+
+.btn-primary {
+    -fx-background-color: #c9a96e;
+    -fx-text-fill: #141414;
+}
+
+.btn-secondary {
+    -fx-text-fill: #c9a96e;
+    -fx-border-color: #c9a96e;
+}
+
+.btn-link {
+    -fx-text-fill: #c9a96e;
+}
+
+.btn-danger {
+    -fx-background-color: #e06060;
+    -fx-text-fill: #141414;
+}
+
+.btn-theme-toggle {
+    -fx-text-fill: #c9a96e;
+}
+
+
+.text-field,
+.password-field {
+    -fx-background-color: #1a1a1a;
+    -fx-border-color: #333333;
+    -fx-text-fill: #e8e4df;
+    -fx-prompt-text-fill: #555555;
+}
+
+.text-field:focused,
+.password-field:focused {
+    -fx-border-color: #c9a96e;
+}
+
+.text-area {
+    -fx-control-inner-background: #1a1a1a;
+    -fx-text-fill: #e8e4df;
+}
+
+.combo-box {
+    -fx-background-color: #1a1a1a;
+    -fx-border-color: #333333;
+    -fx-text-fill: #e8e4df;
+}
+
+
+.card,
+.auth-card,
+.catalog-card {
+    -fx-background-color: #1e1e1e;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.4), 10, 0, 0, 3);
+}
+
+.catalog-card:hover {
+    -fx-background-color: #262626;
+}
+
+.card-image-area {
+    -fx-background-color: #161616;
+}
+
+.card-image-placeholder {
+    -fx-text-fill: #444444;
+}
+
+.image-placeholder {
+    -fx-background-color: #161616;
+}
+
+
+.sidebar {
+    -fx-background-color: #1a1a1a;
+    -fx-border-color: #333333;
+    -fx-border-width: 0 1 0 0;
+}
+
+.sidebar .label {
+    -fx-text-fill: #8a8a8a;
+}
+
+.sidebar .section-heading {
+    -fx-text-fill: #d4c4a0;
+}
+
+
+.image-placeholder {
+    -fx-background-color: #1a1a1a;
+}
+
+.image-placeholder .label {
+    -fx-text-fill: #444444;
+}
+
+
+.separator .line {
+    -fx-border-color: #333333;
+}
+
+
+.list-view {
+    -fx-background-color: #1a1a1a;
+    -fx-border-color: #333333;
+}
+
+.list-view .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: #e8e4df;
+}
+
+.list-view .list-cell:selected {
+    -fx-background-color: #2a2a2a;
+    -fx-text-fill: #c9a96e;
+}
+
+.list-view .list-cell:hover {
+    -fx-background-color: #222222;
+}
+
+
+.tab-pane>.tab-header-area>.tab-header-background {
+    -fx-background-color: #1e1e1e;
+}
+
+.tab-pane .tab {
+    -fx-background-color: #141414;
+}
+
+.tab-pane .tab:selected {
+    -fx-background-color: #2a2a2a;
+}
+
+.tab-pane .tab .tab-label {
+    -fx-text-fill: #8a8a8a;
+}
+
+.tab-pane .tab:selected .tab-label {
+    -fx-text-fill: #c9a96e;
+}
+
+
+.scroll-bar {
+    -fx-background-color: #141414;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #333333;
+    -fx-background-radius: 4;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: #444444;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
+    -fx-shape: "";
+    -fx-padding: 0;
+}
+
+
+.cart-row {
+    -fx-background-color: #1e1e1e;
+    -fx-border-color: #333333;
+}
+
+
+.stock-available {
+    -fx-text-fill: #5cb85c;
+}
+
+.stock-empty {
+    -fx-text-fill: #e06060;
+}
+
+
+.review-item {
+    -fx-text-fill: #e8e4df;
+    -fx-border-color: #333333;
+}
+
+
+.order-items {
+    -fx-border-color: #333333;
+}
+
+.order-item-label {
+    -fx-text-fill: #8a8a8a;
+}
+
+
+.settings-card,
+.profile-card {
+    -fx-background-color: #1e1e1e;
+    -fx-background-radius: 8;
+    -fx-padding: 24;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.4), 10, 0, 0, 3);
+}
+
+.profile-value {
+    -fx-text-fill: #e8e4df;
+    -fx-font-size: 15px;
+}
+
+.toggle-row {
+    -fx-background-color: #1a1a1a;
+    -fx-background-radius: 6;
+    -fx-padding: 14;
+}
+
+.toggle-row .label {
+    -fx-text-fill: #e8e4df;
+}
+
+
+.detail-price {
+    -fx-text-fill: #5cb85c;
+}
+
+.badge-era {
+    -fx-background-color: #333333;
+    -fx-text-fill: #c9a96e;
+}
+
+.spec-key {
+    -fx-text-fill: #8a8a8a;
+}
+
+.spec-value {
+    -fx-text-fill: #e8e4df;
+}
+
+.review-card {
+    -fx-background-color: #1a1a1a;
+}
+
+.review-stars {
+    -fx-text-fill: #c9a96e;
+}
+
+.review-comment {
+    -fx-text-fill: #e8e4df;
+}
+
+.related-card {
+    -fx-background-color: #1e1e1e;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 8, 0, 0, 2);
+}
+
+.spinner {
+    -fx-background-color: #1a1a1a;
+    -fx-border-color: #333333;
+}

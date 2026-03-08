@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.leocodes.relikd.controller.ComputerDetailController" styleClass="root">
+
+    <top>
+        <HBox styleClass="nav-bar">
+            <Button text="← Catalog" onAction="#onBack" styleClass="btn-link"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="breadcrumbLabel" styleClass="subtitle-label"/>
+        </HBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="scroll-pane">
+            <VBox styleClass="detail-container">
+                <ProgressIndicator fx:id="loadingIndicator" visible="false" styleClass="progress-indicator"/>
+
+                <HBox spacing="30">
+                    <StackPane styleClass="image-placeholder">
+                        <javafx.scene.image.ImageView fx:id="productImage" fitWidth="280" fitHeight="280"
+                                                       preserveRatio="true" smooth="true"/>
+                        <Label fx:id="noImageLabel" text="No Image Available"/>
+                    </StackPane>
+
+                    <VBox spacing="12" HBox.hgrow="ALWAYS">
+                        <Label fx:id="titleLabel" styleClass="title-label" wrapText="true"/>
+
+                        <HBox spacing="10" alignment="CENTER_LEFT">
+                            <Label fx:id="conditionBadge" styleClass="badge"/>
+                            <Label fx:id="eraBadge" styleClass="badge"/>
+                        </HBox>
+
+                        <Label fx:id="priceLabel" styleClass="detail-price"/>
+
+                        <Label fx:id="stockLabel"/>
+
+
+                        <HBox spacing="10" alignment="CENTER_LEFT" styleClass="cart-action-row">
+                            <Label text="Qty:" styleClass="field-label"/>
+                            <Spinner fx:id="quantitySpinner" prefWidth="80"/>
+                            <Button fx:id="addToCartButton" text="Add to Cart" onAction="#onAddToCart" styleClass="btn-primary" prefHeight="36"/>
+                        </HBox>
+                    </VBox>
+                </HBox>
+
+                <Separator/>
+
+
+                <VBox spacing="6">
+                    <Label text="About This Machine" styleClass="section-heading"/>
+                    <Label fx:id="descriptionLabel" wrapText="true"/>
+                </VBox>
+
+                <Separator/>
+
+
+                <VBox spacing="10">
+                    <Label text="Specifications" styleClass="section-heading"/>
+                    <GridPane fx:id="specsGrid" styleClass="specs-grid"/>
+                </VBox>
+
+                <Separator/>
+
+
+                <VBox spacing="14">
+                    <HBox spacing="14" alignment="CENTER_LEFT">
+                        <Label text="Reviews" styleClass="section-heading"/>
+                        <Label fx:id="averageRatingLabel" styleClass="badge"/>
+                    </HBox>
+                    <VBox fx:id="reviewsBox" spacing="10"/>
+                </VBox>
+
+                <Separator/>
+
+
+                <VBox spacing="14">
+                    <Label text="From the Same Era" styleClass="section-heading"/>
+                    <HBox fx:id="relatedBox" spacing="14"/>
+                </VBox>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+
+</BorderPane>

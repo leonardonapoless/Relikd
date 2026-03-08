@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.leocodes.relikd.controller.ProfileController" styleClass="root">
+
+    <top>
+        <HBox styleClass="nav-bar">
+            <Button text="← Back to Catalog" onAction="#onBack" styleClass="btn-link"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label text="Profile" styleClass="title-label"/>
+        </HBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="scroll-pane">
+            <VBox spacing="24" maxWidth="500" alignment="TOP_CENTER" style="-fx-padding: 30;">
+
+                <VBox spacing="16" styleClass="profile-card">
+                    <Label fx:id="fullNameLabel" styleClass="title-label"/>
+                    <Separator/>
+
+                    <VBox spacing="4">
+                        <Label text="USERNAME" styleClass="field-label"/>
+                        <Label fx:id="usernameLabel" styleClass="profile-value"/>
+                    </VBox>
+
+                    <VBox spacing="4">
+                        <Label text="EMAIL" styleClass="field-label"/>
+                        <Label fx:id="emailLabel" styleClass="profile-value"/>
+                    </VBox>
+
+                    <VBox spacing="4">
+                        <Label text="ROLE" styleClass="field-label"/>
+                        <Label fx:id="roleLabel" styleClass="profile-value"/>
+                    </VBox>
+
+                    <VBox spacing="4">
+                        <Label text="MEMBER SINCE" styleClass="field-label"/>
+                        <Label fx:id="memberSinceLabel" styleClass="profile-value"/>
+                    </VBox>
+                </VBox>
+
+                <Button text="Sign Out" onAction="#onSignOut" styleClass="btn-danger" maxWidth="Infinity"/>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+
+</BorderPane>

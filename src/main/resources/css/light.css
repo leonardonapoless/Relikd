@@ -1,0 +1,323 @@
+.root {
+    -fx-background-color: #faf6f0;
+    -fx-text-fill: #333333;
+}
+
+
+.title-label {
+    -fx-text-fill: #6b4e1f;
+}
+
+.subtitle-label {
+    -fx-text-fill: #888888;
+}
+
+.section-heading {
+    -fx-text-fill: #333333;
+}
+
+.field-label {
+    -fx-text-fill: #888888;
+}
+
+.error-label {
+    -fx-text-fill: #c0392b;
+}
+
+.empty-state-label {
+    -fx-text-fill: #aaaaaa;
+}
+
+.card-year {
+    -fx-text-fill: #999999;
+}
+
+.card-price {
+    -fx-text-fill: #2d8a4e;
+}
+
+.card-title {
+    -fx-text-fill: #333333;
+}
+
+
+.nav-bar {
+    -fx-background-color: #2d2d2d;
+    -fx-border-color: #222222;
+    -fx-border-width: 0 0 1 0;
+}
+
+.nav-bar .title-label {
+    -fx-text-fill: #c9a96e;
+}
+
+.nav-bar .label {
+    -fx-text-fill: #cccccc;
+}
+
+.nav-icon {
+    -fx-icon-color: #8b7355;
+    -fx-fill: #8b7355;
+}
+
+
+.btn-primary {
+    -fx-background-color: #a07830;
+    -fx-text-fill: #ffffff;
+}
+
+.btn-secondary {
+    -fx-text-fill: #a07830;
+    -fx-border-color: #a07830;
+}
+
+.btn-link {
+    -fx-text-fill: #a07830;
+}
+
+.btn-danger {
+    -fx-background-color: #d9534f;
+    -fx-text-fill: white;
+}
+
+.btn-theme-toggle {
+    -fx-text-fill: #cccccc;
+}
+
+
+.text-field,
+.password-field {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #d5d0c8;
+    -fx-text-fill: #333333;
+    -fx-prompt-text-fill: #bbbbbb;
+}
+
+.text-field:focused,
+.password-field:focused {
+    -fx-border-color: #a07830;
+}
+
+.text-area {
+    -fx-control-inner-background: #ffffff;
+    -fx-text-fill: #333333;
+}
+
+.combo-box {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #d5d0c8;
+}
+
+
+.card,
+.auth-card,
+.catalog-card {
+    -fx-background-color: #ffffff;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.06), 8, 0, 0, 2);
+}
+
+.catalog-card:hover {
+    -fx-background-color: #f8f4ee;
+}
+
+.card-image-area {
+    -fx-background-color: #f0ebe3;
+}
+
+.card-image-placeholder {
+    -fx-text-fill: #c0b8a8;
+}
+
+.image-placeholder {
+    -fx-background-color: #f0ebe3;
+}
+
+
+.sidebar {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e8e2d8;
+    -fx-border-width: 0 1 0 0;
+}
+
+.sidebar .label {
+    -fx-text-fill: #888888;
+}
+
+.sidebar .section-heading {
+    -fx-text-fill: #333333;
+}
+
+
+.image-placeholder {
+    -fx-background-color: #f0ebe3;
+}
+
+.image-placeholder .label {
+    -fx-text-fill: #bbbbbb;
+}
+
+
+.separator .line {
+    -fx-border-color: #e0dbd2;
+}
+
+
+.list-view {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #d5d0c8;
+}
+
+.list-view .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: #333333;
+}
+
+.list-view .list-cell:selected {
+    -fx-background-color: #f0e6d2;
+    -fx-text-fill: #6b4e1f;
+}
+
+.list-view .list-cell:hover {
+    -fx-background-color: #f8f4ee;
+}
+
+
+.tab-pane>.tab-header-area>.tab-header-background {
+    -fx-background-color: #ffffff;
+}
+
+.tab-pane .tab {
+    -fx-background-color: #faf6f0;
+}
+
+.tab-pane .tab:selected {
+    -fx-background-color: #ffffff;
+}
+
+.tab-pane .tab .tab-label {
+    -fx-text-fill: #aaaaaa;
+}
+
+.tab-pane .tab:selected .tab-label {
+    -fx-text-fill: #6b4e1f;
+}
+
+
+.scroll-bar {
+    -fx-background-color: #faf6f0;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #d5d0c8;
+    -fx-background-radius: 4;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: #bbbbbb;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
+    -fx-shape: "";
+    -fx-padding: 0;
+}
+
+
+.cart-row {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e8e2d8;
+}
+
+
+.stock-available {
+    -fx-text-fill: #2d8a4e;
+}
+
+.stock-empty {
+    -fx-text-fill: #c0392b;
+}
+
+
+.review-item {
+    -fx-text-fill: #333333;
+    -fx-border-color: #e0dbd2;
+}
+
+
+.order-items {
+    -fx-border-color: #e0dbd2;
+}
+
+.order-item-label {
+    -fx-text-fill: #888888;
+}
+
+
+.settings-card,
+.profile-card {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 8;
+    -fx-padding: 24;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.06), 8, 0, 0, 2);
+}
+
+.profile-value {
+    -fx-text-fill: #333333;
+    -fx-font-size: 15px;
+}
+
+.toggle-row {
+    -fx-background-color: #f5f0e8;
+    -fx-background-radius: 6;
+    -fx-padding: 14;
+}
+
+.toggle-row .label {
+    -fx-text-fill: #333333;
+}
+
+
+.detail-price {
+    -fx-text-fill: #2d8a4e;
+}
+
+.badge-era {
+    -fx-background-color: #f0e6d2;
+    -fx-text-fill: #6b4e1f;
+}
+
+.spec-key {
+    -fx-text-fill: #888888;
+}
+
+.spec-value {
+    -fx-text-fill: #333333;
+}
+
+.review-card {
+    -fx-background-color: #f8f4ee;
+}
+
+.review-stars {
+    -fx-text-fill: #a07830;
+}
+
+.review-comment {
+    -fx-text-fill: #333333;
+}
+
+.related-card {
+    -fx-background-color: #ffffff;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.06), 8, 0, 0, 2);
+}
+
+.spinner {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #d5d0c8;
+}

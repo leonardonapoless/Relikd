@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.leocodes.relikd.controller.AdminController" styleClass="root">
+
+    <top>
+        <HBox styleClass="nav-bar">
+            <Button text="← Back to Catalog" onAction="#onBack" styleClass="btn-link"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label text="Admin Panel" styleClass="title-label"/>
+        </HBox>
+    </top>
+
+    <center>
+        <TabPane tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+
+                <Tab text="Inventory Management">
+                    <HBox spacing="20" style="-fx-padding: 20;">
+                        <VBox spacing="10" HBox.hgrow="ALWAYS">
+                            <Label text="Listings" styleClass="section-heading"/>
+                            <HBox spacing="10" alignment="CENTER_LEFT">
+                                <Label text="Search:" styleClass="field-label"/>
+                                <TextField fx:id="searchField" promptText="Brand or Model..." HBox.hgrow="ALWAYS" styleClass="text-field"/>
+                            </HBox>
+                            <ListView fx:id="inventoryListView" VBox.vgrow="ALWAYS" styleClass="list-view"/>
+                            <Button text="Clear Selection / New" onAction="#onClearForm" styleClass="btn-link"/>
+                        </VBox>
+
+                        <VBox spacing="14" styleClass="card" prefWidth="400">
+                            <Label text="Computer Details" styleClass="section-heading"/>
+
+                            <GridPane hgap="10" vgap="10">
+                                <Label text="Brand:" styleClass="field-label" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                                <TextField fx:id="brandField" GridPane.columnIndex="1" GridPane.rowIndex="0" styleClass="text-field"/>
+
+                                <Label text="Model:" styleClass="field-label" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                                <TextField fx:id="modelField" GridPane.columnIndex="1" GridPane.rowIndex="1" styleClass="text-field"/>
+
+                                <Label text="Year:" styleClass="field-label" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                                <TextField fx:id="yearField" GridPane.columnIndex="1" GridPane.rowIndex="2" styleClass="text-field"/>
+
+                                <Label text="Era:" styleClass="field-label" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                                <ComboBox fx:id="eraCombo" GridPane.columnIndex="1" GridPane.rowIndex="3" prefWidth="200" styleClass="combo-box"/>
+
+                                <Label text="Condition:" styleClass="field-label" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                                <ComboBox fx:id="conditionCombo" GridPane.columnIndex="1" GridPane.rowIndex="4" prefWidth="200" styleClass="combo-box"/>
+
+                                <Label text="Price:" styleClass="field-label" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+                                <TextField fx:id="priceField" GridPane.columnIndex="1" GridPane.rowIndex="5" styleClass="text-field"/>
+
+                                <Label text="Stock:" styleClass="field-label" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
+                                <TextField fx:id="stockField" GridPane.columnIndex="1" GridPane.rowIndex="6" styleClass="text-field"/>
+                            </GridPane>
+
+                            <Label text="DESCRIPTION" styleClass="field-label"/>
+                            <TextArea fx:id="descriptionArea" prefRowCount="4" styleClass="text-area"/>
+
+                            <Label text="SPECS (JSON format)" styleClass="field-label"/>
+                            <TextArea fx:id="specsArea" prefRowCount="4" styleClass="text-area" promptText="{&quot;CPU&quot;: &quot;...&quot;, &quot;RAM&quot;: &quot;...&quot;}"/>
+
+                            <Button fx:id="saveComputerButton" text="Add New Computer" onAction="#onSaveComputer" styleClass="btn-primary" maxWidth="Infinity"/>
+                        </VBox>
+                    </HBox>
+                </Tab>
+
+                <Tab text="Order Management">
+                    <HBox spacing="20" style="-fx-padding: 20;">
+                        <VBox spacing="10" HBox.hgrow="ALWAYS">
+                            <Label text="All Orders" styleClass="section-heading"/>
+                            <ListView fx:id="ordersListView" VBox.vgrow="ALWAYS" styleClass="list-view"/>
+                        </VBox>
+
+                        <VBox spacing="14" styleClass="card" prefWidth="300">
+                            <Label text="Update Status" styleClass="section-heading"/>
+                            <ComboBox fx:id="statusCombo" prefWidth="Infinity" styleClass="combo-box"/>
+                            <Button fx:id="updateStatusButton" text="Save Status" onAction="#onUpdateOrderStatus" styleClass="btn-primary" maxWidth="Infinity" disable="true"/>
+                        </VBox>
+                    </HBox>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </center>
+
+</BorderPane>

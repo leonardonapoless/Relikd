@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.leocodes.relikd.controller.OrderHistoryController" styleClass="root">
+
+    <top>
+        <HBox styleClass="nav-bar">
+            <Button text="← Back to Catalog" onAction="#onBack" styleClass="btn-link"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label text="Order History" styleClass="title-label"/>
+        </HBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="scroll-pane">
+            <VBox spacing="20" maxWidth="800" alignment="TOP_CENTER" style="-fx-padding: 20;">
+                <ProgressIndicator fx:id="loadingIndicator" visible="false" styleClass="progress-indicator"/>
+                <VBox fx:id="ordersBox" spacing="20" alignment="TOP_CENTER"/>
+            </VBox>
+        </ScrollPane>
+    </center>
+
+</BorderPane>
