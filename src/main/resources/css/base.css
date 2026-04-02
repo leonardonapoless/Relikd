@@ -255,6 +255,32 @@
     -fx-alignment: top-left;
 }
 
+.catalog-list-view {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+}
+
+.catalog-list-view>.virtual-flow>.clipped-container>.sheet>.list-cell {
+    -fx-background-color: transparent;
+    -fx-padding: 0 0 0 0;
+}
+
+.catalog-list-view>.virtual-flow>.clipped-container>.sheet>.list-cell:selected,
+.catalog-list-view>.virtual-flow>.clipped-container>.sheet>.list-cell:focused {
+    -fx-background-color: transparent;
+}
+
+.catalog-list-view:focused {
+    -fx-background-color: transparent;
+}
+
+.catalog-row {
+    -fx-padding: 0;
+    -fx-alignment: top-left;
+}
+
+
 .catalog-card {
     -fx-background-radius: 8;
     -fx-padding: 0 0 12 0;
