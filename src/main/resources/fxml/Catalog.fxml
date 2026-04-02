@@ -59,12 +59,9 @@
     </left>
 
     <center>
-        <ScrollPane fx:id="mainScrollPane" fitToWidth="true" styleClass="scroll-pane">
-            <StackPane style="-fx-padding: 20;">
-                <FlowPane fx:id="computerGrid" styleClass="catalog-grid" prefWrapLength="800"/>
-                <ProgressIndicator fx:id="loadingIndicator" visible="false" styleClass="progress-indicator"/>
-            </StackPane>
-        </ScrollPane>
+        <StackPane style="-fx-padding: 20;">
+            <ListView fx:id="catalogListView" styleClass="catalog-list-view"/>
+            <ProgressIndicator fx:id="loadingIndicator" visible="false" styleClass="progress-indicator"/>
+        </StackPane>
     </center>
-
 </BorderPane>

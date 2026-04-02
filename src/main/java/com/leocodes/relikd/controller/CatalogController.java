@@ -16,13 +16,18 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.FlowPane;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.control.ScrollPane;
-import javafx.application.Platform;
+
+import javafx.collections.FXCollections;
 import org.kordamp.ikonli.javafx.FontIcon;
 import org.kordamp.ikonli.materialdesign2.MaterialDesignC;
 import org.kordamp.ikonli.materialdesign2.MaterialDesignP;
@@ -33,45 +38,61 @@ import org.kordamp.ikonli.materialdesign2.MaterialDesignW;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
-
+import java.util.stream.Collectors;
 
 public class CatalogController implements Initializable {
 
-    @FXML private Label welcomeLabel;
-    @FXML private FlowPane computerGrid;
-    @FXML private ComboBox<String> eraFilter;
-    @FXML private ComboBox<String> brandFilter;
-    @FXML private ComboBox<String> conditionFilter;
-    @FXML private ComboBox<String> sortFilter;
-    @FXML private TextField searchField;
-    @FXML private Label resultsLabel;
-    @FXML private ProgressIndicator loadingIndicator;
-    @FXML private ScrollPane mainScrollPane;
-    
-    @FXML private Button cartButton;
-    @FXML private Button ordersButton;
-    @FXML private Button adminButton;
-    @FXML private Button profileButton;
-    @FXML private Button themeToggleButton;
-    @FXML private Button settingsButton;
+    @FXML
+    private Label welcomeLabel;
+    @FXML
+    private ListView<List<Computer>> catalogListView;
+    @FXML
+    private ComboBox<String> eraFilter;
+    @FXML
+    private ComboBox<String> brandFilter;
+    @FXML
+    private ComboBox<String> conditionFilter;
+    @FXML
+    private ComboBox<String> sortFilter;
+    @FXML
+    private TextField searchField;
+    @FXML
+    private Label resultsLabel;
+    @FXML
+    private ProgressIndicator loadingIndicator;
+
+    @FXML
+    private Button cartButton;
+    @FXML
+    private Button ordersButton;
+    @FXML
+    private Button adminButton;
+    @FXML
+    private Button profileButton;
+    @FXML
+    private Button themeToggleButton;
+    @FXML
+    private Button settingsButton;
 
     private final ComputerDAO computerDAO = new ComputerDAO();
     private List<Computer> allComputers;
     private static final ExecutorService vThreads = Executors.newVirtualThreadPerTaskExecutor();
+
+    private static final int CARDS_PER_ROW = 3;
+    private static final NumberFormat PRICE_FORMAT = NumberFormat.getCurrencyInstance(Locale.US);
 
     private static String savedEra = "All";
     private static String savedBrand = "All";
     private static String savedCondition = "All";
     private static String savedSort = "Name A–Z";
     private static String savedSearch = "";
-    private static double savedScrollY = 0.0;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -105,21 +126,40 @@ public class CatalogController implements Initializable {
 
         sortFilter.getItems().addAll("Name A–Z", "Name Z–A", "Price ↑", "Price ↓", "Year ↑", "Year ↓");
         sortFilter.setValue(savedSort);
-        
+
         searchField.setText(savedSearch);
 
-        eraFilter.valueProperty().addListener((obs, o, n) -> { savedEra = n; applyFilters(); });
-        brandFilter.valueProperty().addListener((obs, o, n) -> { savedBrand = n; applyFilters(); });
-        conditionFilter.valueProperty().addListener((obs, o, n) -> { savedCondition = n; applyFilters(); });
-        sortFilter.valueProperty().addListener((obs, o, n) -> { savedSort = n; applyFilters(); });
-        searchField.textProperty().addListener((obs, o, n) -> { savedSearch = n; applyFilters(); });
-        
-        if (mainScrollPane != null) {
-            mainScrollPane.vvalueProperty().addListener((obs, o, n) -> savedScrollY = n.doubleValue());
-        }
+        eraFilter.valueProperty().addListener((obs, o, n) -> {
+            savedEra = n;
+            applyFilters();
+        });
+        brandFilter.valueProperty().addListener((obs, o, n) -> {
+            savedBrand = n;
+            applyFilters();
+        });
+        conditionFilter.valueProperty().addListener((obs, o, n) -> {
+            savedCondition = n;
+            applyFilters();
+        });
+        sortFilter.valueProperty().addListener((obs, o, n) -> {
+            savedSort = n;
+            applyFilters();
+        });
+        searchField.textProperty().addListener((obs, o, n) -> {
+            savedSearch = n;
+            applyFilters();
+        });
 
+        configureCatalogListView();
         setupNavIcons();
         loadComputers();
+    }
+
+    private void configureCatalogListView() {
+        catalogListView.setFocusTraversable(false);
+        catalogListView.setCellFactory(lv -> new CatalogRowCell());
+
+        catalogListView.setPlaceholder(new Label(""));
     }
 
     private void setupNavIcons() {
@@ -144,7 +184,7 @@ public class CatalogController implements Initializable {
     }
 
     private void loadComputers() {
-        computerGrid.getChildren().clear();
+        catalogListView.getItems().clear();
         loadingIndicator.setVisible(true);
 
         Task<List<Computer>> task = new Task<>() {
@@ -159,9 +199,6 @@ public class CatalogController implements Initializable {
             loadingIndicator.setVisible(false);
             populateBrandFilter();
             applyFilters();
-            if (mainScrollPane != null) {
-                Platform.runLater(() -> mainScrollPane.setVvalue(savedScrollY));
-            }
         });
 
         task.setOnFailed(e -> {
@@ -177,20 +214,19 @@ public class CatalogController implements Initializable {
         String current = brandFilter.getValue();
         brandFilter.getItems().clear();
         brandFilter.getItems().add("All");
-        
+
         allComputers.stream()
-                .map(comp -> comp.getBrand())
+                .map(Computer::getBrand)
                 .distinct()
                 .sorted()
                 .forEach(b -> brandFilter.getItems().add(b));
-                
+
         brandFilter.setValue(current != null && brandFilter.getItems().contains(current) ? current : "All");
     }
 
     private void applyFilters() {
-        if (allComputers == null) return;
-
-        computerGrid.getChildren().clear();
+        if (allComputers == null)
+            return;
 
         String selectedEra = eraFilter.getValue();
         String selectedBrand = brandFilter.getValue();
@@ -202,33 +238,84 @@ public class CatalogController implements Initializable {
 
         var filtered = allComputers.stream()
                 .filter(comp -> selectedEraEnum.map(era -> {
-                    if (era.isAppleEra()) return comp.getEra() == era;
+                    if (era.isAppleEra())
+                        return comp.getEra() == era;
                     return comp.getEra() == era || comp.getEra().getGeneralEra() == era;
                 }).orElse(true))
                 .filter(comp -> "All".equals(selectedBrand) || comp.getBrand().equals(selectedBrand))
-                .filter(comp -> "All".equals(selectedCondition) || comp.getCondition().getLabel().equals(selectedCondition))
-                .filter(comp -> comp.getModel().toLowerCase().contains(searchText) || comp.getBrand().toLowerCase().contains(searchText))
+                .filter(comp -> "All".equals(selectedCondition)
+                        || comp.getCondition().getLabel().equals(selectedCondition))
+                .filter(comp -> comp.getModel().toLowerCase().contains(searchText)
+                        || comp.getBrand().toLowerCase().contains(searchText))
                 .collect(Collectors.toList());
 
         Comparator<Computer> sorter = switch (selectedSort) {
-            case "Name Z–A" -> Comparator.comparing((Computer comp) -> comp.getBrand() + " " + comp.getModel()).reversed();
+            case "Name Z–A" ->
+                Comparator.comparing((Computer comp) -> comp.getBrand() + " " + comp.getModel()).reversed();
             case "Price ↑" -> Comparator.comparingDouble(Computer::getPrice);
             case "Price ↓" -> Comparator.comparingDouble(Computer::getPrice).reversed();
             case "Year ↑" -> Comparator.comparingInt(Computer::getYear);
             case "Year ↓" -> Comparator.comparingInt(Computer::getYear).reversed();
             default -> Comparator.comparing(comp -> comp.getBrand() + " " + comp.getModel());
         };
-        
+
         filtered.sort(sorter);
 
         resultsLabel.setText(filtered.size() + " of " + allComputers.size() + " machines");
 
+        var rows = partitionIntoRows(filtered, CARDS_PER_ROW);
+        catalogListView.setItems(FXCollections.observableArrayList(rows));
+
         if (filtered.isEmpty()) {
-            showEmptyState();
-        } else {
-            for (Computer comp : filtered) {
-                computerGrid.getChildren().add(buildComputerCard(comp));
+            var placeholder = new Label("No machines match that search. Try broader filters.");
+            placeholder.getStyleClass().add("empty-state-label");
+            catalogListView.setPlaceholder(placeholder);
+        }
+    }
+
+    private List<List<Computer>> partitionIntoRows(List<Computer> items, int rowSize) {
+        var rows = new ArrayList<List<Computer>>();
+        for (int i = 0; i < items.size(); i += rowSize) {
+            rows.add(items.subList(i, Math.min(i + rowSize, items.size())));
+        }
+        return rows;
+    }
+
+    private class CatalogRowCell extends ListCell<List<Computer>> {
+
+        private final HBox rowBox = new HBox(14);
+
+        CatalogRowCell() {
+            rowBox.setAlignment(Pos.TOP_LEFT);
+            rowBox.getStyleClass().add("catalog-row");
+
+            setStyle("-fx-background-color: transparent; -fx-padding: 0 0 14 0;");
+        }
+
+        @Override
+        protected void updateItem(List<Computer> computers, boolean empty) {
+            super.updateItem(computers, empty);
+
+            if (empty || computers == null) {
+                setGraphic(null);
+                return;
             }
+
+            rowBox.getChildren().clear();
+
+            for (Computer comp : computers) {
+                rowBox.getChildren().add(buildComputerCard(comp));
+            }
+
+            int remaining = CARDS_PER_ROW - computers.size();
+            for (int i = 0; i < remaining; i++) {
+                Region spacer = new Region();
+                spacer.setPrefWidth(210);
+                spacer.setMinWidth(210);
+                rowBox.getChildren().add(spacer);
+            }
+
+            setGraphic(rowBox);
         }
     }
 
@@ -238,10 +325,10 @@ public class CatalogController implements Initializable {
         card.setAlignment(Pos.TOP_LEFT);
         card.setOnMouseClicked(e -> openDetail(comp.getId()));
 
-        javafx.scene.layout.StackPane imageArea = new javafx.scene.layout.StackPane();
+        StackPane imageArea = new StackPane();
         imageArea.getStyleClass().add("card-image-area");
 
-        javafx.scene.image.ImageView thumb = new javafx.scene.image.ImageView();
+        ImageView thumb = new ImageView();
         thumb.setFitWidth(200);
         thumb.setFitHeight(140);
         thumb.setPreserveRatio(true);
@@ -269,14 +356,13 @@ public class CatalogController implements Initializable {
         metaRow.setAlignment(Pos.CENTER_LEFT);
         Label yearLabel = new Label(String.valueOf(comp.getYear()));
         yearLabel.getStyleClass().add("card-year");
-        
+
         Label conditionBadge = new Label(comp.getCondition().getLabel());
         conditionBadge.getStyleClass().addAll("badge", "badge-" + comp.getCondition().name().toLowerCase());
-        
+
         metaRow.getChildren().addAll(yearLabel, conditionBadge);
 
-        NumberFormat fmt = NumberFormat.getCurrencyInstance(Locale.US);
-        Label priceLabel = new Label(fmt.format(comp.getPrice()));
+        Label priceLabel = new Label(PRICE_FORMAT.format(comp.getPrice()));
         priceLabel.getStyleClass().add("card-price");
 
         card.getChildren().addAll(imageArea, nameLabel, metaRow, priceLabel);
@@ -286,12 +372,6 @@ public class CatalogController implements Initializable {
     private void openDetail(int computerId) {
         ComputerDetailController.setSelectedComputerId(computerId);
         Navigator.navigateTo("ComputerDetail.fxml");
-    }
-
-    private void showEmptyState() {
-        Label empty = new Label("No machines match that search. Try broader filters.");
-        empty.getStyleClass().add("empty-state-label");
-        computerGrid.getChildren().add(empty);
     }
 
     private void showError(String message) {
