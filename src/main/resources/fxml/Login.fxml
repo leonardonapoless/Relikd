@@ -21,12 +21,12 @@
         <VBox spacing="14" style="-fx-padding: 24 0 0 0;">
             <VBox spacing="4">
                 <Label text="USERNAME OR EMAIL" styleClass="field-label"/>
-                <TextField fx:id="usernameField" promptText="steve@apple.com" styleClass="text-field" prefWidth="300"/>
+                <TextField fx:id="usernameField" promptText="johnappleseed@gmail.com" styleClass="text-field" prefWidth="300"/>
             </VBox>
 
             <VBox spacing="4">
                 <Label text="PASSWORD" styleClass="field-label"/>
-                <PasswordField fx:id="passwordField" styleClass="password-field" prefWidth="300"/>
+                <PasswordField fx:id="passwordField" promptText="⏺⏺⏺⏺⏺⏺⏺⏺" styleClass="password-field" prefWidth="300"/>
             </VBox>
 
             <Label fx:id="errorLabel" styleClass="error-label" visible="false" wrapText="true"/>

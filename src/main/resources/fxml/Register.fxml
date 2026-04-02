@@ -35,12 +35,12 @@
 
             <VBox spacing="4">
                 <Label text="PASSWORD" styleClass="field-label"/>
-                <PasswordField fx:id="passwordField" styleClass="password-field" prefWidth="320"/>
+                <PasswordField fx:id="passwordField" promptText="⏺⏺⏺⏺⏺⏺⏺⏺" styleClass="password-field" prefWidth="320"/>
             </VBox>
 
             <VBox spacing="4">
                 <Label text="CONFIRM PASSWORD" styleClass="field-label"/>
-                <PasswordField fx:id="confirmPasswordField" styleClass="password-field" prefWidth="320"/>
+                <PasswordField fx:id="confirmPasswordField" promptText="⏺⏺⏺⏺⏺⏺⏺⏺" styleClass="password-field" prefWidth="320"/>
             </VBox>
 
             <Label fx:id="errorLabel" styleClass="error-label" visible="false" wrapText="true"/>
