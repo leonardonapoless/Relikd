@@ -80,13 +80,13 @@ public class OrderDAO {
 
                 var sqlStock = "UPDATE computers SET stock = stock - ? WHERE id = ? AND stock >= ?";
                 try (var stockStmt = conn.prepareStatement(sqlStock)) {
-                    stockStmt.setInt(1, item.getQuantity());
-                    stockStmt.setInt(2, item.getComputerId());
-                    stockStmt.setInt(3, item.getQuantity());
+                    stockStmt.setInt(1, item.quantity());
+                    stockStmt.setInt(2, item.computerId());
+                    stockStmt.setInt(3, item.quantity());
                     int updated = stockStmt.executeUpdate();
                     if (updated == 0) {
                         throw new SQLException(
-                                "Insufficient stock to fulfill order for computer id " + item.getComputerId());
+                                "Insufficient stock to fulfill order for computer id " + item.computerId());
                     }
                 }
             }
@@ -102,11 +102,11 @@ public class OrderDAO {
     private int insertOrder(Connection conn, Order order) throws SQLException {
         var sql = "INSERT INTO orders (user_id, status, total, notes, created_at) VALUES (?, ?, ?, ?, ?)";
         try (var stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            stmt.setInt(1, order.getUserId());
-            stmt.setString(2, order.getStatus().name().toLowerCase());
-            stmt.setDouble(3, order.getTotal());
-            stmt.setString(4, order.getNotes());
-            stmt.setString(5, order.getCreatedAt().toString());
+            stmt.setInt(1, order.userId());
+            stmt.setString(2, order.status().name().toLowerCase());
+            stmt.setDouble(3, order.total());
+            stmt.setString(4, order.notes());
+            stmt.setString(5, order.createdAt().toString());
             stmt.executeUpdate();
 
             try (var rs = stmt.getGeneratedKeys()) {

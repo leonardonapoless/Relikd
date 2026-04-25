@@ -31,11 +31,11 @@ public class ReviewDAO {
                 VALUES (?, ?, ?, ?, ?)
                 """;
         try (var stmt = DatabaseManager.getConnection().prepareStatement(sql)) {
-            stmt.setInt(1, review.getUserId());
-            stmt.setInt(2, review.getComputerId());
-            stmt.setInt(3, review.getRating());
-            stmt.setString(4, review.getComment());
-            stmt.setString(5, review.getCreatedAt().toString());
+            stmt.setInt(1, review.userId());
+            stmt.setInt(2, review.computerId());
+            stmt.setInt(3, review.rating());
+            stmt.setString(4, review.comment());
+            stmt.setString(5, review.createdAt().toString());
             stmt.executeUpdate();
         }
     }

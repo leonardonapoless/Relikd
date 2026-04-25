@@ -53,7 +53,7 @@ public class OrderHistoryController implements Initializable {
         Task<List<Order>> task = new Task<>() {
             @Override
             protected List<Order> call() throws SQLException {
-                return orderDAO.findByUserId(Session.get().getUser().getId());
+                return orderDAO.findByUserId(Session.get().getUser().id());
             }
         };
 
@@ -90,17 +90,17 @@ public class OrderHistoryController implements Initializable {
             HBox header = new HBox(15);
             header.setAlignment(Pos.CENTER_LEFT);
 
-            Label orderIdLabel = new Label("Order #" + order.getId());
+            Label orderIdLabel = new Label("Order #" + order.id());
             orderIdLabel.getStyleClass().add("card-title");
 
-            Label dateLabel = new Label(DateUtil.formatForDisplay(order.getCreatedAt()));
+            Label dateLabel = new Label(DateUtil.formatForDisplay(order.createdAt()));
             dateLabel.getStyleClass().add("card-year");
 
-            Label topTotal = new Label(currencyFormat.format(order.getTotal()));
+            Label topTotal = new Label(currencyFormat.format(order.total()));
             topTotal.getStyleClass().add("card-price");
 
-            Label statusBadge = new Label(order.getStatus().getLabel());
-            statusBadge.getStyleClass().addAll("badge", "status-" + order.getStatus().name().toLowerCase());
+            Label statusBadge = new Label(order.status().getLabel());
+            statusBadge.getStyleClass().addAll("badge", "status-" + order.status().name().toLowerCase());
 
             header.getChildren().addAll(orderIdLabel, dateLabel, topTotal, statusBadge);
             orderCard.getChildren().add(header);
@@ -108,7 +108,7 @@ public class OrderHistoryController implements Initializable {
             VBox itemsBox = new VBox(5);
             itemsBox.getStyleClass().add("order-items");
 
-            loadOrderItemsAsync(order.getId(), itemsBox, currencyFormat);
+            loadOrderItemsAsync(order.id(), itemsBox, currencyFormat);
 
             orderCard.getChildren().add(itemsBox);
             ordersBox.getChildren().add(orderCard);
@@ -137,14 +137,14 @@ public class OrderHistoryController implements Initializable {
         Task<Computer> fetchTask = new Task<>() {
             @Override
             protected Computer call() throws SQLException {
-                return computerDAO.findById(item.getComputerId()).orElse(null);
+                return computerDAO.findById(item.computerId()).orElse(null);
             }
         };
         fetchTask.setOnSucceeded(e -> {
             Computer c = fetchTask.getValue();
             if (c != null) {
-                Label label = new Label(item.getQuantity() + "x " + c.getBrand() + " " + c.getModel() + " @ "
-                        + fmt.format(item.getPriceAtPurchase()));
+                Label label = new Label(item.quantity() + "x " + c.brand() + " " + c.model() + " @ "
+                        + fmt.format(item.priceAtPurchase()));
                 label.getStyleClass().add("order-item-label");
                 container.getChildren().add(label);
             }

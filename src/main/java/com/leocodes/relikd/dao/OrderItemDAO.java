@@ -29,9 +29,9 @@ public class OrderItemDAO {
         var sql = "INSERT INTO order_items (order_id, computer_id, quantity, price_at_purchase) VALUES (?, ?, ?, ?)";
         try (var stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, assignedOrderId);
-            stmt.setInt(2, item.getComputerId());
-            stmt.setInt(3, item.getQuantity());
-            stmt.setDouble(4, item.getPriceAtPurchase());
+            stmt.setInt(2, item.computerId());
+            stmt.setInt(3, item.quantity());
+            stmt.setDouble(4, item.priceAtPurchase());
             stmt.executeUpdate();
         }
     }

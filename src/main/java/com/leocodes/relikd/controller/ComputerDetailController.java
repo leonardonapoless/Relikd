@@ -94,18 +94,18 @@ public class ComputerDetailController implements Initializable {
     private void renderDetails() {
         NumberFormat fmt = NumberFormat.getCurrencyInstance(Locale.US);
 
-        titleLabel.setText(computer.getBrand() + " " + computer.getModel() + " (" + computer.getYear() + ")");
-        breadcrumbLabel.setText(computer.getEra().getLabel() + "  ›  " + computer.getBrand());
-        priceLabel.setText(fmt.format(computer.getPrice()));
+        titleLabel.setText(computer.brand() + " " + computer.model() + " (" + computer.year() + ")");
+        breadcrumbLabel.setText(computer.era().getLabel() + "  ›  " + computer.brand());
+        priceLabel.setText(fmt.format(computer.price()));
 
-        conditionBadge.setText(computer.getCondition().getLabel());
-        conditionBadge.getStyleClass().addAll("badge", "badge-" + computer.getCondition().name().toLowerCase());
+        conditionBadge.setText(computer.condition().getLabel());
+        conditionBadge.getStyleClass().addAll("badge", "badge-" + computer.condition().name().toLowerCase());
 
-        eraBadge.setText(computer.getEra().getLabel());
+        eraBadge.setText(computer.era().getLabel());
         eraBadge.getStyleClass().add("badge-era");
 
         descriptionLabel.setText(
-                computer.getDescription() != null ? computer.getDescription() : "No description provided.");
+                computer.description() != null ? computer.description() : "No description provided.");
 
         loadProductImage();
         renderSpecs();
@@ -114,12 +114,12 @@ public class ComputerDetailController implements Initializable {
 
     private void renderStock() {
         if (computer.isInStock()) {
-            stockLabel.setText("\u2713  In Stock — " + computer.getStock() + " available");
+            stockLabel.setText("\u2713  In Stock — " + computer.stock() + " available");
             stockLabel.getStyleClass().add("stock-available");
             addToCartButton.setDisable(false);
             quantitySpinner.setDisable(false);
 
-            int max = Math.min(computer.getStock(), 10);
+            int max = Math.min(computer.stock(), 10);
             quantitySpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, max, 1));
         } else {
             stockLabel.setText("\u2717  Out of Stock");
@@ -130,7 +130,7 @@ public class ComputerDetailController implements Initializable {
     }
 
     private void loadProductImage() {
-        String url = computer.getImagePath();
+        String url = computer.imagePath();
         if (url == null || url.isBlank()) {
             productImage.setVisible(false);
             noImageLabel.setVisible(true);
@@ -161,7 +161,7 @@ public class ComputerDetailController implements Initializable {
         col2.setPercentWidth(65);
         specsGrid.getColumnConstraints().addAll(col1, col2);
 
-        String specs = computer.getSpecsAsJson();
+        String specs = computer.specsAsJson();
         if (specs == null || specs.isBlank()) {
             Label noSpecs = new Label("No specifications provided.");
             noSpecs.getStyleClass().add("empty-state-label");
@@ -198,7 +198,7 @@ public class ComputerDetailController implements Initializable {
         Task<List<Review>> task = new Task<>() {
             @Override
             protected List<Review> call() throws SQLException {
-                return reviewDAO.findByComputerId(computer.getId());
+                return reviewDAO.findByComputerId(computer.id());
             }
         };
 
@@ -215,7 +215,7 @@ public class ComputerDetailController implements Initializable {
                 return;
             }
 
-            double avg = reviews.stream().mapToInt(Review::getRating).average().orElse(0);
+            double avg = reviews.stream().mapToInt(Review::rating).average().orElse(0);
             averageRatingLabel.setText(renderStars((int) Math.round(avg)) + "  " + String.format("%.1f", avg) + " / 5");
             averageRatingLabel.getStyleClass().add("badge-era");
 
@@ -223,10 +223,10 @@ public class ComputerDetailController implements Initializable {
                 VBox reviewCard = new VBox(6);
                 reviewCard.getStyleClass().add("review-card");
 
-                Label starsLabel = new Label(renderStars(r.getRating()));
+                Label starsLabel = new Label(renderStars(r.rating()));
                 starsLabel.getStyleClass().add("review-stars");
 
-                Label commentLabel = new Label(r.getComment());
+                Label commentLabel = new Label(r.comment());
                 commentLabel.setWrapText(true);
                 commentLabel.getStyleClass().add("review-comment");
 
@@ -246,7 +246,7 @@ public class ComputerDetailController implements Initializable {
         Task<List<Computer>> task = new Task<>() {
             @Override
             protected List<Computer> call() throws SQLException {
-                return computerDAO.findByEra(computer.getEra());
+                return computerDAO.findByEra(computer.era());
             }
         };
 
@@ -255,7 +255,7 @@ public class ComputerDetailController implements Initializable {
             NumberFormat fmt = NumberFormat.getCurrencyInstance(Locale.US);
 
             var related = task.getValue().stream()
-                    .filter(c -> c.getId() != computer.getId())
+                    .filter(c -> c.id() != computer.id())
                     .limit(4)
                     .toList();
 
@@ -270,20 +270,20 @@ public class ComputerDetailController implements Initializable {
                 VBox card = new VBox(6);
                 card.getStyleClass().add("related-card");
 
-                Label name = new Label(c.getBrand() + " " + c.getModel());
+                Label name = new Label(c.brand() + " " + c.model());
                 name.getStyleClass().add("card-title");
                 name.setWrapText(true);
 
-                Label year = new Label(String.valueOf(c.getYear()));
+                Label year = new Label(String.valueOf(c.year()));
                 year.getStyleClass().add("card-year");
 
-                Label price = new Label(fmt.format(c.getPrice()));
+                Label price = new Label(fmt.format(c.price()));
                 price.getStyleClass().add("card-price");
 
                 Button viewBtn = new Button("View");
                 viewBtn.getStyleClass().add("btn-secondary");
                 viewBtn.setOnAction(ev -> {
-                    setSelectedComputerId(c.getId());
+                    setSelectedComputerId(c.id());
                     Navigator.navigateTo("ComputerDetail.fxml");
                 });
 
@@ -300,7 +300,7 @@ public class ComputerDetailController implements Initializable {
         if (computer != null && computer.isInStock()) {
             int qty = quantitySpinner.getValue();
             CartService.get().addItem(computer, qty);
-            showSuccess(qty + "x " + computer.getBrand() + " " + computer.getModel() + " added to cart!");
+            showSuccess(qty + "x " + computer.brand() + " " + computer.model() + " added to cart!");
         }
     }
 

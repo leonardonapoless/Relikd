@@ -32,11 +32,11 @@ public class ProfileController implements Initializable {
         }
 
         User user = Session.get().getUser();
-        fullNameLabel.setText(user.getFullName());
-        usernameLabel.setText("@" + user.getUsername());
-        emailLabel.setText(user.getEmail());
-        roleLabel.setText(user.getRole().name().charAt(0) + user.getRole().name().substring(1).toLowerCase());
-        memberSinceLabel.setText(DateUtil.formatForDisplay(user.getCreatedAt()));
+        fullNameLabel.setText(user.fullName());
+        usernameLabel.setText("@" + user.username());
+        emailLabel.setText(user.email());
+        roleLabel.setText(user.role().name().charAt(0) + user.role().name().substring(1).toLowerCase());
+        memberSinceLabel.setText(DateUtil.formatForDisplay(user.createdAt()));
     }
 
     @FXML

@@ -63,17 +63,17 @@ public class ComputerDAO {
                 """;
 
         try (var stmt = DatabaseManager.getConnection().prepareStatement(sql)) {
-            stmt.setString(1, computer.getBrand());
-            stmt.setString(2, computer.getModel());
-            stmt.setInt(3, computer.getYear());
-            stmt.setString(4, computer.getEra().name().toLowerCase());
-            stmt.setString(5, computer.getCondition().name().toLowerCase());
-            stmt.setDouble(6, computer.getPrice());
-            stmt.setInt(7, computer.getStock());
-            stmt.setString(8, computer.getDescription());
-            stmt.setString(9, computer.getSpecsAsJson());
-            stmt.setString(10, computer.getImagePath());
-            stmt.setString(11, computer.getCreatedAt().toString());
+            stmt.setString(1, computer.brand());
+            stmt.setString(2, computer.model());
+            stmt.setInt(3, computer.year());
+            stmt.setString(4, computer.era().name().toLowerCase());
+            stmt.setString(5, computer.condition().name().toLowerCase());
+            stmt.setDouble(6, computer.price());
+            stmt.setInt(7, computer.stock());
+            stmt.setString(8, computer.description());
+            stmt.setString(9, computer.specsAsJson());
+            stmt.setString(10, computer.imagePath());
+            stmt.setString(11, LocalDateTime.now().toString());
             stmt.executeUpdate();
         }
     }
@@ -95,17 +95,17 @@ public class ComputerDAO {
                 WHERE id = ?
                 """;
         try (var stmt = DatabaseManager.getConnection().prepareStatement(sql)) {
-            stmt.setString(1, computer.getBrand());
-            stmt.setString(2, computer.getModel());
-            stmt.setInt(3, computer.getYear());
-            stmt.setString(4, computer.getEra().name().toLowerCase());
-            stmt.setString(5, computer.getCondition().name().toLowerCase());
-            stmt.setDouble(6, computer.getPrice());
-            stmt.setInt(7, computer.getStock());
-            stmt.setString(8, computer.getDescription());
-            stmt.setString(9, computer.getSpecsAsJson());
-            stmt.setString(10, computer.getImagePath());
-            stmt.setInt(11, computer.getId());
+            stmt.setString(1, computer.brand());
+            stmt.setString(2, computer.model());
+            stmt.setInt(3, computer.year());
+            stmt.setString(4, computer.era().name().toLowerCase());
+            stmt.setString(5, computer.condition().name().toLowerCase());
+            stmt.setDouble(6, computer.price());
+            stmt.setInt(7, computer.stock());
+            stmt.setString(8, computer.description());
+            stmt.setString(9, computer.specsAsJson());
+            stmt.setString(10, computer.imagePath());
+            stmt.setInt(11, computer.id());
             return stmt.executeUpdate() > 0;
         }
     }

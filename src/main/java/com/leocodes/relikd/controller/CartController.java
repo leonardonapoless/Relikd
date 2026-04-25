@@ -61,7 +61,7 @@ public class CartController implements Initializable {
         NumberFormat fmt = NumberFormat.getCurrencyInstance(Locale.US);
 
         for (var item : items) {
-            var cOpt = computers.stream().filter(c -> c.getId() == item.getComputerId()).findFirst();
+            var cOpt = computers.stream().filter(c -> c.id() == item.computerId()).findFirst();
             if (cOpt.isEmpty())
                 continue;
             var computer = cOpt.get();
@@ -72,23 +72,23 @@ public class CartController implements Initializable {
 
             VBox info = new VBox(5);
             Label nameLabel = new Label(
-                    computer.getBrand() + " " + computer.getModel() + " (" + computer.getYear() + ")");
+                    computer.brand() + " " + computer.model() + " (" + computer.year() + ")");
             nameLabel.getStyleClass().add("card-title");
 
-            Label qtyLabel = new Label("Qty: " + item.getQuantity() + " @ " + fmt.format(item.getPriceAtPurchase()));
+            Label qtyLabel = new Label("Qty: " + item.quantity() + " @ " + fmt.format(item.priceAtPurchase()));
             qtyLabel.getStyleClass().add("card-year");
             info.getChildren().addAll(nameLabel, qtyLabel);
 
             Region spacer = new Region();
             HBox.setHgrow(spacer, Priority.ALWAYS);
 
-            Label totalItemLabel = new Label(fmt.format(item.getQuantity() * item.getPriceAtPurchase()));
+            Label totalItemLabel = new Label(fmt.format(item.quantity() * item.priceAtPurchase()));
             totalItemLabel.getStyleClass().add("card-price");
 
             Button removeButton = new Button("Remove");
             removeButton.getStyleClass().add("btn-danger");
             removeButton.setOnAction(e -> {
-                CartService.get().removeItem(computer.getId());
+                CartService.get().removeItem(computer.id());
                 renderCart();
             });
 
@@ -114,7 +114,7 @@ public class CartController implements Initializable {
         Task<Void> checkoutTask = new Task<>() {
             @Override
             protected Void call() throws SQLException {
-                int userId = Session.get().getUser().getId();
+                int userId = Session.get().getUser().id();
                 double total = CartService.get().getTotal();
                 Order order = new Order(0, userId, OrderStatus.PENDING, total, "Web order", LocalDateTime.now());
 

@@ -35,6 +35,6 @@ public class Session {
     }
 
     public boolean isAdmin() {
-        return isLoggedIn() && currentUser.getRole() == Role.ADMIN;
+        return isLoggedIn() && currentUser.role() == Role.ADMIN;
     }
 }

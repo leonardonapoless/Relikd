@@ -24,20 +24,20 @@ public class CartService {
     }
 
     public void addItem(Computer computer, int quantity) {
-        var existing = getExistingItem(computer.getId());
+        var existing = getExistingItem(computer.id());
         if (existing.isPresent()) {
             var item = existing.get();
             items.remove(item);
-            items.add(new OrderItem(0, 0, computer.getId(), item.getQuantity() + quantity, computer.getPrice()));
+            items.add(new OrderItem(0, 0, computer.id(), item.quantity() + quantity, computer.price()));
         } else {
-            items.add(new OrderItem(0, 0, computer.getId(), quantity, computer.getPrice()));
+            items.add(new OrderItem(0, 0, computer.id(), quantity, computer.price()));
             computerReferences.add(computer);
         }
     }
 
     public void removeItem(int computerId) {
-        items.removeIf(i -> i.getComputerId() == computerId);
-        computerReferences.removeIf(c -> c.getId() == computerId);
+        items.removeIf(i -> i.computerId() == computerId);
+        computerReferences.removeIf(c -> c.id() == computerId);
     }
 
     public void clear() {
@@ -55,11 +55,11 @@ public class CartService {
 
     public double getTotal() {
         return items.stream()
-                .mapToDouble(i -> i.getPriceAtPurchase() * i.getQuantity())
+                .mapToDouble(i -> i.priceAtPurchase() * i.quantity())
                 .sum();
     }
 
     private Optional<OrderItem> getExistingItem(int computerId) {
-        return items.stream().filter(i -> i.getComputerId() == computerId).findFirst();
+        return items.stream().filter(i -> i.computerId() == computerId).findFirst();
     }
 }
