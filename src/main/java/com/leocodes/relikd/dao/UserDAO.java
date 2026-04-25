@@ -56,12 +56,12 @@ public class UserDAO {
                 VALUES (?, ?, ?, ?, ?, ?)
                 """;
         try (var stmt = DatabaseManager.getConnection().prepareStatement(sql)) {
-            stmt.setString(1, user.getUsername());
-            stmt.setString(2, user.getEmail());
-            stmt.setString(3, user.getPasswordHash());
-            stmt.setString(4, user.getFullName());
-            stmt.setString(5, user.getRole().name().toLowerCase());
-            stmt.setString(6, user.getCreatedAt().toString());
+            stmt.setString(1, user.username());
+            stmt.setString(2, user.email());
+            stmt.setString(3, user.passwordHash());
+            stmt.setString(4, user.fullName());
+            stmt.setString(5, user.role().name().toLowerCase());
+            stmt.setString(6, user.createdAt().toString());
             stmt.executeUpdate();
         }
     }

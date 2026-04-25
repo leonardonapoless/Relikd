@@ -98,7 +98,7 @@ public class CatalogController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         var user = Session.get().getUser();
         if (user != null) {
-            welcomeLabel.setText("Welcome, " + user.getFullName());
+            welcomeLabel.setText("Welcome, " + user.fullName());
         }
 
         adminButton.setVisible(Session.get().isAdmin());
@@ -216,7 +216,7 @@ public class CatalogController implements Initializable {
         brandFilter.getItems().add("All");
 
         allComputers.stream()
-                .map(Computer::getBrand)
+                .map(Computer::brand)
                 .distinct()
                 .sorted()
                 .forEach(b -> brandFilter.getItems().add(b));
@@ -239,24 +239,24 @@ public class CatalogController implements Initializable {
         var filtered = allComputers.stream()
                 .filter(comp -> selectedEraEnum.map(era -> {
                     if (era.isAppleEra())
-                        return comp.getEra() == era;
-                    return comp.getEra() == era || comp.getEra().getGeneralEra() == era;
+                        return comp.era() == era;
+                    return comp.era() == era || comp.era().getGeneralEra() == era;
                 }).orElse(true))
-                .filter(comp -> "All".equals(selectedBrand) || comp.getBrand().equals(selectedBrand))
+                .filter(comp -> "All".equals(selectedBrand) || comp.brand().equals(selectedBrand))
                 .filter(comp -> "All".equals(selectedCondition)
-                        || comp.getCondition().getLabel().equals(selectedCondition))
-                .filter(comp -> comp.getModel().toLowerCase().contains(searchText)
-                        || comp.getBrand().toLowerCase().contains(searchText))
+                        || comp.condition().getLabel().equals(selectedCondition))
+                .filter(comp -> comp.model().toLowerCase().contains(searchText)
+                        || comp.brand().toLowerCase().contains(searchText))
                 .collect(Collectors.toList());
 
         Comparator<Computer> sorter = switch (selectedSort) {
             case "Name Z–A" ->
-                Comparator.comparing((Computer comp) -> comp.getBrand() + " " + comp.getModel()).reversed();
-            case "Price ↑" -> Comparator.comparingDouble(Computer::getPrice);
-            case "Price ↓" -> Comparator.comparingDouble(Computer::getPrice).reversed();
-            case "Year ↑" -> Comparator.comparingInt(Computer::getYear);
-            case "Year ↓" -> Comparator.comparingInt(Computer::getYear).reversed();
-            default -> Comparator.comparing(comp -> comp.getBrand() + " " + comp.getModel());
+                Comparator.comparing((Computer comp) -> comp.brand() + " " + comp.model()).reversed();
+            case "Price ↑" -> Comparator.comparingDouble(Computer::price);
+            case "Price ↓" -> Comparator.comparingDouble(Computer::price).reversed();
+            case "Year ↑" -> Comparator.comparingInt(Computer::year);
+            case "Year ↓" -> Comparator.comparingInt(Computer::year).reversed();
+            default -> Comparator.comparing(comp -> comp.brand() + " " + comp.model());
         };
 
         filtered.sort(sorter);
@@ -323,7 +323,7 @@ public class CatalogController implements Initializable {
         VBox card = new VBox(6);
         card.getStyleClass().add("catalog-card");
         card.setAlignment(Pos.TOP_LEFT);
-        card.setOnMouseClicked(e -> openDetail(comp.getId()));
+        card.setOnMouseClicked(e -> openDetail(comp.id()));
 
         StackPane imageArea = new StackPane();
         imageArea.getStyleClass().add("card-image-area");
@@ -339,7 +339,7 @@ public class CatalogController implements Initializable {
 
         imageArea.getChildren().addAll(placeholder, thumb);
 
-        String url = comp.getImagePath();
+        String url = comp.imagePath();
         if (url != null && !url.isEmpty()) {
             ImageCache.loadAsync(url, thumb, () -> {
                 if (thumb.getImage() != null && !thumb.getImage().isError()) {
@@ -348,21 +348,21 @@ public class CatalogController implements Initializable {
             });
         }
 
-        Label nameLabel = new Label(comp.getBrand() + " " + comp.getModel());
+        Label nameLabel = new Label(comp.brand() + " " + comp.model());
         nameLabel.getStyleClass().add("card-title");
         nameLabel.setWrapText(true);
 
         HBox metaRow = new HBox(8);
         metaRow.setAlignment(Pos.CENTER_LEFT);
-        Label yearLabel = new Label(String.valueOf(comp.getYear()));
+        Label yearLabel = new Label(String.valueOf(comp.year()));
         yearLabel.getStyleClass().add("card-year");
 
-        Label conditionBadge = new Label(comp.getCondition().getLabel());
-        conditionBadge.getStyleClass().addAll("badge", "badge-" + comp.getCondition().name().toLowerCase());
+        Label conditionBadge = new Label(comp.condition().getLabel());
+        conditionBadge.getStyleClass().addAll("badge", "badge-" + comp.condition().name().toLowerCase());
 
         metaRow.getChildren().addAll(yearLabel, conditionBadge);
 
-        Label priceLabel = new Label(PRICE_FORMAT.format(comp.getPrice()));
+        Label priceLabel = new Label(PRICE_FORMAT.format(comp.price()));
         priceLabel.getStyleClass().add("card-price");
 
         card.getChildren().addAll(imageArea, nameLabel, metaRow, priceLabel);

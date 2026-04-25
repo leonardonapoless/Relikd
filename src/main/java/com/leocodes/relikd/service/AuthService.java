@@ -25,7 +25,7 @@ public class AuthService {
 
         if (userOpt.isPresent()) {
             User user = userOpt.get();
-            if (PasswordUtil.verify(password, user.getPasswordHash())) {
+            if (PasswordUtil.verify(password, user.passwordHash())) {
                 return Optional.of(user);
             }
         }

@@ -90,8 +90,8 @@ public class AdminController implements Initializable {
                 if (empty || item == null) {
                     setText(null);
                 } else {
-                    setText(String.format("[%d] %s %s - Stock: %d", item.getId(), item.getBrand(), item.getModel(),
-                            item.getStock()));
+                    setText(String.format("[%d] %s %s - Stock: %d", item.id(), item.brand(), item.model(),
+                            item.stock()));
                 }
             }
         });
@@ -119,8 +119,8 @@ public class AdminController implements Initializable {
 
         String lowerQuery = query.toLowerCase();
         List<Computer> filtered = allComputers.stream()
-                .filter(c -> c.getBrand().toLowerCase().contains(lowerQuery) || 
-                             c.getModel().toLowerCase().contains(lowerQuery))
+                .filter(c -> c.brand().toLowerCase().contains(lowerQuery) || 
+                             c.model().toLowerCase().contains(lowerQuery))
                 .toList();
         
         inventoryListView.setItems(FXCollections.observableArrayList(filtered));
@@ -137,7 +137,7 @@ public class AdminController implements Initializable {
                     setText(null);
                 } else {
                     setText(String.format("Order #%d - User %d - Status: %s - Total: $%.2f",
-                            item.getId(), item.getUserId(), item.getStatus().getLabel(), item.getTotal()));
+                            item.id(), item.userId(), item.status().getLabel(), item.total()));
                 }
             }
         });
@@ -145,7 +145,7 @@ public class AdminController implements Initializable {
         ordersListView.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null) {
                 selectedOrder = newVal;
-                statusCombo.setValue(newVal.getStatus());
+                statusCombo.setValue(newVal.status());
                 updateStatusButton.setDisable(false);
             }
         });
@@ -180,15 +180,15 @@ public class AdminController implements Initializable {
     }
 
     private void populateComputerForm(Computer c) {
-        brandField.setText(c.getBrand());
-        modelField.setText(c.getModel());
-        yearField.setText(String.valueOf(c.getYear()));
-        eraCombo.setValue(c.getEra());
-        conditionCombo.setValue(c.getCondition());
-        priceField.setText(String.valueOf(c.getPrice()));
-        stockField.setText(String.valueOf(c.getStock()));
-        descriptionArea.setText(c.getDescription());
-        specsArea.setText(c.getSpecsAsJson());
+        brandField.setText(c.brand());
+        modelField.setText(c.model());
+        yearField.setText(String.valueOf(c.year()));
+        eraCombo.setValue(c.era());
+        conditionCombo.setValue(c.condition());
+        priceField.setText(String.valueOf(c.price()));
+        stockField.setText(String.valueOf(c.stock()));
+        descriptionArea.setText(c.description());
+        specsArea.setText(c.specsAsJson());
     }
 
     @FXML
@@ -238,11 +238,20 @@ public class AdminController implements Initializable {
                                 null, LocalDateTime.now());
                         computerDAO.save(newC);
                     } else {
-                        selectedComputer.setCondition(condition);
-                        selectedComputer.setPrice(price);
-                        selectedComputer.setStock(stock);
-                        selectedComputer.setDescription(desc);
-                        selectedComputer.setSpecsFromJson(finalSpecs);
+                        selectedComputer = new Computer(
+                                selectedComputer.id(),
+                                selectedComputer.brand(),
+                                selectedComputer.model(),
+                                selectedComputer.year(),
+                                selectedComputer.era(),
+                                condition,
+                                price,
+                                stock,
+                                desc,
+                                finalSpecs,
+                                selectedComputer.imagePath(),
+                                selectedComputer.createdAt()
+                        );
                         computerDAO.update(selectedComputer);
                     }
                     return null;
@@ -275,7 +284,7 @@ public class AdminController implements Initializable {
         Task<Void> task = new Task<>() {
             @Override
             protected Void call() throws SQLException {
-                orderDAO.updateStatus(selectedOrder.getId(), statusCombo.getValue());
+                orderDAO.updateStatus(selectedOrder.id(), statusCombo.getValue());
                 return null;
             }
         };
